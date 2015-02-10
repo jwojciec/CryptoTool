@@ -13,5 +13,4 @@ public class Conversion {
 
         return sb.toString().substring(0, numchars).toUpperCase();
     }	
-
 }

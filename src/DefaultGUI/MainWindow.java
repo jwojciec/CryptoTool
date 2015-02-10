@@ -4,15 +4,14 @@ import CryptoToolAlgo.*;
 import Conversion.*;
 
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -22,7 +21,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.Random;
+
+import javax.swing.JRadioButton;
 
 public class MainWindow extends JFrame {
 
@@ -62,12 +62,11 @@ public class MainWindow extends JFrame {
 		AesAlgo aes_algo = new AesAlgo();
 		DesAlgo des_algo = new DesAlgo();
 		TripleDesAlgo tdes_algo = new TripleDesAlgo();
-		TripleDesAlgoCBC tdes_algoCbc = new TripleDesAlgoCBC();
 		Conversion conv = new Conversion();
 
 		setTitle("CryptoTool");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 189);
+		setBounds(100, 100, 648, 194);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -93,7 +92,7 @@ public class MainWindow extends JFrame {
 						.length()));
 			}
 		});
-		textFieldKey.setBounds(62, 11, 227, 20);
+		textFieldKey.setBounds(62, 11, 425, 20);
 		contentPane.add(textFieldKey);
 		textFieldKey.setColumns(10);
 
@@ -105,35 +104,46 @@ public class MainWindow extends JFrame {
 						.length()));
 			}
 		});
-		textFieldValue.setBounds(62, 36, 227, 20);
+		textFieldValue.setBounds(62, 36, 425, 20);
 		contentPane.add(textFieldValue);
 		textFieldValue.setColumns(10);
 
 		textFieldResult = new JTextField();
-		textFieldResult.setBounds(62, 61, 227, 20);
+		textFieldResult.setBounds(62, 61, 425, 20);
 		contentPane.add(textFieldResult);
 		textFieldResult.setColumns(10);
 
 		lblKeyLen = new JLabel("Len");
-		lblKeyLen.setBounds(299, 14, 27, 14);
+		lblKeyLen.setBounds(497, 14, 27, 14);
 		contentPane.add(lblKeyLen);
 
 		lblValueLen = new JLabel("Len");
-		lblValueLen.setBounds(299, 39, 27, 14);
+		lblValueLen.setBounds(497, 39, 27, 14);
 		contentPane.add(lblValueLen);
 
 		lblResultLen = new JLabel("Len");
-		lblResultLen.setBounds(299, 64, 46, 14);
+		lblResultLen.setBounds(497, 64, 27, 14);
 		contentPane.add(lblResultLen);
 
-		JComboBox comboBox = new JComboBox();
+		JComboBox<String> comboBox = new JComboBox<>();
 		comboBox.setBounds(10, 119, 117, 20);
-		comboBox.addItem("");
 		comboBox.addItem("AES");
 		comboBox.addItem("DES");
-		comboBox.addItem("3DES CBC");
-		comboBox.addItem("3DES ECB");
+		comboBox.addItem("3DES");
 		contentPane.add(comboBox);
+		
+		JRadioButton rdbtnECB = new JRadioButton("ECB");
+		rdbtnECB.setSelected(true);
+		rdbtnECB.setBounds(133, 118, 55, 23);
+		contentPane.add(rdbtnECB);
+		
+		JRadioButton rdbtnCBC = new JRadioButton("CBC");
+		rdbtnCBC.setBounds(190, 118, 55, 23);
+		contentPane.add(rdbtnCBC);
+		
+	    ButtonGroup radioGroup = new ButtonGroup();			
+	    radioGroup.add(rdbtnECB);
+	    radioGroup.add(rdbtnCBC);			
 
 		btnKeyRandom = new JButton("Random");
 		btnKeyRandom.addActionListener(new ActionListener() {
@@ -142,14 +152,13 @@ public class MainWindow extends JFrame {
 				switch (chosen_algo) {
 				case "AES": textFieldKey.setText(conv.getRandomHexString(64)); break;
 				case "DES": textFieldKey.setText(conv.getRandomHexString(16)); break;
-				case "3DES CBC": textFieldKey.setText(conv.getRandomHexString(32)); break;
-				case "3DES ECB": textFieldKey.setText(conv.getRandomHexString(32)); break;
+				case "3DES": textFieldKey.setText(conv.getRandomHexString(32)); break;
 				}
 				lblKeyLen.setText(Integer.toString(textFieldKey.getText()
 						.length()));
 			}
 		});
-		btnKeyRandom.setBounds(336, 11, 88, 20);
+		btnKeyRandom.setBounds(534, 11, 88, 20);
 		contentPane.add(btnKeyRandom);
 
 		btnNewButton = new JButton("Random");
@@ -159,14 +168,13 @@ public class MainWindow extends JFrame {
 				switch (chosen_algo) {
 				case "AES": textFieldValue.setText(conv.getRandomHexString(64)); break;
 				case "DES": textFieldValue.setText(conv.getRandomHexString(16)); break;
-				case "3DES CBC": textFieldValue.setText(conv.getRandomHexString(32)); break;
-				case "3DES ECB": textFieldValue.setText(conv.getRandomHexString(32)); break;
+				case "3DES": textFieldValue.setText(conv.getRandomHexString(32)); break;
 				}
 				lblValueLen.setText(Integer.toString(textFieldValue.getText()
 						.length()));
 			}
 		});
-		btnNewButton.setBounds(336, 36, 88, 20);
+		btnNewButton.setBounds(534, 36, 88, 20);
 		contentPane.add(btnNewButton);
 
 		JButton btnEncrypt = new JButton("Encrypt");
@@ -175,27 +183,31 @@ public class MainWindow extends JFrame {
 				// Encrypt
 				textFieldResult.setForeground(Color.BLACK);
 				String chosen_algo = comboBox.getSelectedItem().toString();
+				String chosen_mode = "";
+				if(rdbtnECB.isSelected())
+					chosen_mode = "ECB";
+				else if(rdbtnCBC.isSelected())
+					chosen_mode = "CBC";
+				
 				try {
 					switch (chosen_algo) {
 					case "AES":
 						textFieldResult.setText(aes_algo.encrypt(
 								textFieldKey.getText(),
-								textFieldValue.getText()));
+								textFieldValue.getText(),
+								chosen_mode));
 						break;
 					case "DES":
 						textFieldResult.setText(des_algo.encrypt(
 								textFieldKey.getText(),
-								textFieldValue.getText()));
+								textFieldValue.getText(),
+								chosen_mode));
 						break;
-					case "3DES CBC":
-						textFieldResult.setText(tdes_algoCbc.encrypt(
-								textFieldKey.getText(),
-								textFieldValue.getText()));
-						break;
-					case "3DES ECB":
+					case "3DES":
 						textFieldResult.setText(tdes_algo.encrypt(
 								textFieldKey.getText(),
-								textFieldValue.getText()));
+								textFieldValue.getText(),
+								chosen_mode));
 						break;
 					}
 				} catch (Exception cipher_ex) {
@@ -207,7 +219,7 @@ public class MainWindow extends JFrame {
 						.length()));
 			}
 		});
-		btnEncrypt.setBounds(140, 119, 88, 20);
+		btnEncrypt.setBounds(338, 119, 88, 20);
 		contentPane.add(btnEncrypt);
 
 		JButton btnDecrypt = new JButton("Decrypt");
@@ -216,27 +228,31 @@ public class MainWindow extends JFrame {
 				// Decrypt
 				textFieldResult.setForeground(Color.BLACK);
 				String chosen_algo = comboBox.getSelectedItem().toString();
+				String chosen_mode = "";
+				if(rdbtnECB.isSelected())
+					chosen_mode = "ECB";
+				else if(rdbtnCBC.isSelected())
+					chosen_mode = "CBC";
+				
 				try {
 					switch (chosen_algo) {
 					case "AES":
 						textFieldResult.setText(aes_algo.decrypt(
 								textFieldKey.getText(),
-								textFieldValue.getText()));
+								textFieldValue.getText(),
+								chosen_mode));
 						break;
 					case "DES":
 						textFieldResult.setText(des_algo.decrypt(
 								textFieldKey.getText(),
-								textFieldValue.getText()));
+								textFieldValue.getText(),
+								chosen_mode));
 						break;
-					case "3DES CBC":
-						textFieldResult.setText(tdes_algoCbc.decrypt(
-								textFieldKey.getText(),
-								textFieldValue.getText()));
-						break;
-					case "3DES ECB":
+					case "3DES":
 						textFieldResult.setText(tdes_algo.decrypt(
 								textFieldKey.getText(),
-								textFieldValue.getText()));
+								textFieldValue.getText(),
+								chosen_mode));
 						break;
 					}
 				} catch (Exception cipher_ex) {
@@ -248,7 +264,7 @@ public class MainWindow extends JFrame {
 						.length()));
 			}
 		});
-		btnDecrypt.setBounds(238, 119, 88, 20);
+		btnDecrypt.setBounds(436, 119, 88, 20);
 		contentPane.add(btnDecrypt);
 
 		JButton btnClear = new JButton("Clear");
@@ -266,7 +282,7 @@ public class MainWindow extends JFrame {
 				lblResultLen.setText("Len");
 			}
 		});
-		btnClear.setBounds(336, 119, 88, 20);
+		btnClear.setBounds(534, 119, 88, 20);
 		contentPane.add(btnClear);
 	}
 }
