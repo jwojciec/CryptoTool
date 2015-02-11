@@ -6,7 +6,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
-public class AesAlgo extends ParentAlgo {
+public class AesAlgo implements ParentAlgo {
 	byte[] ivBytes = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 	IvParameterSpec ivectorSpecv = new IvParameterSpec(ivBytes);
 

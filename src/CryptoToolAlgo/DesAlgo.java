@@ -5,7 +5,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
-public class DesAlgo extends ParentAlgo {
+public class DesAlgo implements ParentAlgo {
 
 	public String encrypt(String keyHex, String plaintextHex, String mode) throws Exception {
 		SecretKey key = new SecretKeySpec(DatatypeConverter.parseHexBinary(keyHex), "DES");

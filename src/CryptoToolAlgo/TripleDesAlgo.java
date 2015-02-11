@@ -5,7 +5,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
-public class TripleDesAlgo extends ParentAlgo {
+public class TripleDesAlgo implements ParentAlgo {
 
 	public String encrypt(String keyHex, String plaintextHex, String mode) throws Exception {
 		// If 3Des Key is 32, make 48 padding
