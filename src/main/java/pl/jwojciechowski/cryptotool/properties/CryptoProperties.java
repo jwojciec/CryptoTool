@@ -1,4 +1,4 @@
-package properties;
+package pl.jwojciechowski.cryptotool.properties;
 
 import java.io.FileInputStream;
 import java.io.IOException;

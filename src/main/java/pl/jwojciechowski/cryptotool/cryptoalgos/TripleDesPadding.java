@@ -1,4 +1,4 @@
-package cryptoalgos;
+package pl.jwojciechowski.cryptotool.cryptoalgos;
 
 public class TripleDesPadding {
 	public static String tDesPadding(String keyHex, String algo) {

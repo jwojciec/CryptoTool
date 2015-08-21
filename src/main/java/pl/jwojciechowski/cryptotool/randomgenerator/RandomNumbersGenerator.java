@@ -1,4 +1,4 @@
-package randomgenerator;
+package pl.jwojciechowski.cryptotool.randomgenerator;
 
 import java.util.Random;
 

@@ -1,4 +1,4 @@
-package cryptoalgos;
+package pl.jwojciechowski.cryptotool.cryptoalgos;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -6,7 +6,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
-import properties.CryptoProperties;
+import pl.jwojciechowski.cryptotool.properties.CryptoProperties;
 
 public class CryptoAlgorithm {
 	CryptoProperties cryptoProperties = new CryptoProperties();

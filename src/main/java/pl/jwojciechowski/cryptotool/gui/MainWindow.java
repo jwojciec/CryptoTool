@@ -1,4 +1,4 @@
-package gui;
+package pl.jwojciechowski.cryptotool.gui;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -18,8 +18,8 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-import cryptoalgos.CryptoAlgorithm;
-import randomgenerator.RandomNumbersGenerator;
+import pl.jwojciechowski.cryptotool.cryptoalgos.CryptoAlgorithm;
+import pl.jwojciechowski.cryptotool.randomgenerator.RandomNumbersGenerator;
 
 public class MainWindow extends JFrame {
 
@@ -38,6 +38,7 @@ public class MainWindow extends JFrame {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -137,6 +138,7 @@ public class MainWindow extends JFrame {
 
 		btnKeyRandom = new JButton("Random");
 		btnKeyRandom.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String chosen_algo = comboBox.getSelectedItem().toString();
 				switch (chosen_algo) {
@@ -158,6 +160,7 @@ public class MainWindow extends JFrame {
 
 		btnNewButton = new JButton("Random");
 		btnNewButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				String chosen_algo = comboBox.getSelectedItem().toString();
 				switch (chosen_algo) {
@@ -179,6 +182,7 @@ public class MainWindow extends JFrame {
 
 		JButton btnEncrypt = new JButton("Encrypt");
 		btnEncrypt.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				// Encrypt
 				textFieldResult.setForeground(Color.BLACK);
@@ -210,6 +214,7 @@ public class MainWindow extends JFrame {
 
 		JButton btnDecrypt = new JButton("Decrypt");
 		btnDecrypt.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				// Decrypt
 				textFieldResult.setForeground(Color.BLACK);
@@ -241,6 +246,7 @@ public class MainWindow extends JFrame {
 
 		JButton btnClear = new JButton("Clear");
 		btnClear.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				// Clear all fields
 				textFieldKey.setText("");
