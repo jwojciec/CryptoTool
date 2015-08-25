@@ -56,6 +56,7 @@ public class MainWindow extends JFrame {
 	 */
 	public MainWindow() {
 		RandomNumbersGenerator randomNumbers = new RandomNumbersGenerator();
+		CryptoAlgorithm cryptoAlgorithm = new CryptoAlgorithm();
 
 		setTitle("CryptoTool");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -194,7 +195,6 @@ public class MainWindow extends JFrame {
 					chosen_mode = "CBC";
 
 				try {
-					CryptoAlgorithm cryptoAlgorithm = new CryptoAlgorithm();
 					cryptoAlgorithm.setKeyHex(textFieldKey.getText());
 					cryptoAlgorithm.setPlaintextHex(textFieldValue.getText());
 					cryptoAlgorithm.setEcbCbcMode(chosen_mode);
@@ -226,7 +226,6 @@ public class MainWindow extends JFrame {
 					chosen_mode = "CBC";
 
 				try {
-					CryptoAlgorithm cryptoAlgorithm = new CryptoAlgorithm();
 					cryptoAlgorithm.setKeyHex(textFieldKey.getText());
 					cryptoAlgorithm.setPlaintextHex(textFieldValue.getText());
 					cryptoAlgorithm.setEcbCbcMode(chosen_mode);
